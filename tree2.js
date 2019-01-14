@@ -72,7 +72,6 @@ class Node {
 class Tree {
   constructor (value) {
     this.root = {value: value, left: null, right: null};
-    this.size = 1;
   }
 
   addChild (value) {
@@ -99,27 +98,73 @@ class Tree {
         cur = cur.right;
       } 
     }
-     this.size++
      return newNode;
   };
  
   printBreadthFirst () {
-    let BFS = [];
-    let cur = this.root;
-    
-  }
+    let cur;
+    let arr = [];
+    let queue = [this.root];
 
+    while (queue.length > 0) {
+      cur = queue.shift();
+      arr.push(cur.value);
+
+      if (!cur.left || !cur.right) {
+        continue;
+      }
+
+      if (cur.left) {
+        queue.push(cur.left);
+      }
+
+      if (cur.right) {
+        queue.push(cur.right);
+      }
+    }
+
+    return arr;
+  };
+  
+  removeChild (value) {
+    let cur;
+    let queue = [this.root];
+
+    while (queue.length > 0) {
+      cur = queue.shift();
+      
+      if (!cur.left || !cur.right) {
+        continue;
+      }
+
+      if (cur.left.value === value) {
+        if (cur.left.left) {
+          cur.left = cur.left.left;
+        } else if (cur.left.right) {
+          cur.left = cur.left.right;
+        } else {
+          cur.left = null;
+        }
+      } else if (cur.right.value === value) {
+        if (cur.right.left) {
+          cur.right = cur.right.left;
+        } else if (cur.right.right) {
+          cur.right = cur.right.right;
+        } else {
+          cur.right = null;
+        }
+      }
+
+      if (cur.left) {
+        queue.push(cur.left);
+      }
+
+      if (cur.right) {
+        queue.push(cur.right);
+      }
+    }
+  };
+  
 };
-
-let myTree = new Tree(5);
-
-myTree.addChild(1);
-myTree.addChild(10);
-myTree.addChild(-5);
-myTree.addChild(2);
-myTree.addChild(8);
-myTree.addChild(50);
-
-console.log(myTree);
 
 module.exports = Tree;

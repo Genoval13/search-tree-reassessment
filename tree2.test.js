@@ -18,7 +18,7 @@ describe('addChild', () => {
   });
 });
 
-xdescribe('printBreadthFirst', () => {
+describe('printBreadthFirst', () => {
   it('should print all nodes in a tree in breadth first order', () => {
     let myTree = new Tree(5);
 
@@ -33,7 +33,7 @@ xdescribe('printBreadthFirst', () => {
   });
 });
 
-xdescribe('removeChild', () => {
+describe('removeChild', () => {
   it('should remove the child with the given value', () => {
     let myTree = new Tree(5);
 
@@ -47,7 +47,7 @@ xdescribe('removeChild', () => {
     myTree.removeChild(2);
     myTree.removeChild(8);
 
-    expect(myTree.left.children).toEqual([{value: -5, children: []}]);
-    expect(myTree.right.children).toEqual([{value: 50, children: []}]);
+    expect(myTree.root.left.left.value).toEqual(-5);
+    expect(myTree.root.right.right.value).toEqual(50);
   });
 });
