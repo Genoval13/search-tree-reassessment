@@ -11,14 +11,14 @@ describe('addChild', () => {
     myTree.addChild(8);
     myTree.addChild(50);
 
-    expect(myTree.root.children[0].value).toEqual(1);
-    expect(myTree.root.children[1].value).toEqual(10);
-    expect(myTree.root.children[0].children[0].value).toEqual(-5);
-    expect(myTree.root.children[1].children[1].value).toEqual(50);
+    expect(myTree.root.left.value).toEqual(1);
+    expect(myTree.root.right.value).toEqual(10);
+    expect(myTree.root.left.left.value).toEqual(-5);
+    expect(myTree.root.right.right.value).toEqual(50);
   });
 });
 
-describe('printBreadthFirst', () => {
+xdescribe('printBreadthFirst', () => {
   it('should print all nodes in a tree in breadth first order', () => {
     let myTree = new Tree(5);
 
@@ -47,7 +47,7 @@ xdescribe('removeChild', () => {
     myTree.removeChild(2);
     myTree.removeChild(8);
 
-    expect(myTree.children[0].children).toEqual([{value: -5, children: []}]);
-    expect(myTree.children[1].children).toEqual([{value: 50, children: []}]);
+    expect(myTree.left.children).toEqual([{value: -5, children: []}]);
+    expect(myTree.right.children).toEqual([{value: 50, children: []}]);
   });
 });

@@ -64,13 +64,14 @@
 class Node {
   constructor (value) {
     this.value = value;
-    this.children = [];
+    this.left = null;
+    this.right = null;
   }
 }
 
 class Tree {
   constructor (value) {
-    this.root = {value: value, children: []};
+    this.root = {value: value, left: null, right: null};
     this.size = 1;
   }
 
@@ -78,33 +79,26 @@ class Tree {
      let newNode = new Node(value);
      let cur = this.root;
      while (cur) {
-       if (cur.children.length === 0) {
-         cur.children.push(newNode);
-         break;
-       } else if (cur.children.length === 1) {
-         if (value < cur.value) {
-           if (cur.children[0] < cur.value) {
-             cur = cur.children[0];
-           } else {
-             cur.children.unshift(newNode);
-             break;
-           }
-         } else {
-           if (cur.children[0] > cur.value) {
-             cur = cur.children[0];
-           } else {
-             cur.children.push(newNode);
-             break;
-           }
-         } 
-       } else {
-         if (cur.value < value) {
-           cur = cur.children[1];
-         } else {
-           cur = cur.children[0];
-         }
-       }
-     }
+      if (!cur.left && !cur.right) {
+        if (value < cur.value) {
+          cur.left = newNode;
+          break;
+        } else {
+          cur.right = newNode;
+          break;
+        }
+      } else if (value < cur.value && !cur.left) {
+        cur.left = newNode;
+        break;
+      } else if (value < cur.value && cur.left) {
+        cur = cur.left;
+      } else if (value > cur.value && !cur.right) {
+        cur.right = newNode;
+        break;
+      } else if (value > cur.value && cur.right) {
+        cur = cur.right;
+      } 
+    }
      this.size++
      return newNode;
   };
