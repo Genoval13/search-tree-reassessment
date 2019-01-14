@@ -1,0 +1,23 @@
+{
+  "name": "search-tree-reassessment",
+  "version": "1.0.0",
+  "description": "Take two on CS topics",
+  "main": "tree2.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Genoval13/search-tree-reassessment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Genoval13/search-tree-reassessment/issues"
+  },
+  "homepage": "https://github.com/Genoval13/search-tree-reassessment#readme",
+  "dependencies": {
+    "jest": "^23.6.0"
+  }
+}
