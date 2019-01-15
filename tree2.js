@@ -107,22 +107,19 @@ class Tree {
     let queue = [this.root];
 
     while (queue.length > 0) {
-      // console.log(queue)
       cur = queue.shift();
       arr.push(cur.value);
 
-      if (!cur.left || !cur.right) {
+      if (!cur.left && !cur.right) {
         continue;
       }
 
-      if (cur.left) {
+      if (cur.left !== null) {
         queue.push(cur.left);
-        // console.log(cur);
       }
 
-      if (cur.right) {
+      if (cur.right !== null) {
         queue.push(cur.right);
-        // console.log(cur);
       }
     }
 
