@@ -107,6 +107,7 @@ class Tree {
     let queue = [this.root];
 
     while (queue.length > 0) {
+      // console.log(queue)
       cur = queue.shift();
       arr.push(cur.value);
 
@@ -116,10 +117,12 @@ class Tree {
 
       if (cur.left) {
         queue.push(cur.left);
+        // console.log(cur);
       }
 
       if (cur.right) {
         queue.push(cur.right);
+        // console.log(cur);
       }
     }
 
@@ -127,40 +130,92 @@ class Tree {
   };
   
   removeChild (value) {
-    let cur;
-    let queue = [this.root];
+    let found = false;
+    let parent = null;
+    let cur = this.root;
+    let childCount, replacement, replacementParent;
 
-    while (queue.length > 0) {
-      cur = queue.shift();
-      
-      if (!cur.left || !cur.right) {
-        continue;
+    while (!found && cur) {
+      if (value < cur.value) {
+        parent = cur;
+        cur = cur.left;
+      } else if (value > cur.value) {
+        parent = cur;
+        cur = cur.right;
+      } else {
+        found = true;
       }
+    }
 
-      if (cur.left.value === value) {
-        if (cur.left.left) {
-          cur.left = cur.left.left;
-        } else if (cur.left.right) {
-          cur.left = cur.left.right;
-        } else {
-          cur.left = null;
+    if (found) {
+      childCount = (cur.left !== null ? 1 : 0 +
+                    cur.right !== null ? 1 : 0);
+    
+      if (cur === this.root) {
+        switch(childCount) {
+          case 0: 
+            this.root = null;
+            break;
+
+          case 1: 
+            this.root = (cur.right === null ? cur.left : cur.right)
+            break;
+
+          case 2:
+            replacement = this.root.left;
+
+            while (replacement.right !== null) {
+              replacementParent = replacement;
+              replacement = replacement.right;
+            }
+
+            if (replacementParent !== null) {
+              replacementParent.right = replacement.left;
+              replacement.right = this.root.right;
+              replacement.left = this.root.left;
+            } else {
+              replacement.right = this.root.right;
+            }
+
+            this.root = replacement;
         }
-      } else if (cur.right.value === value) {
-        if (cur.right.left) {
-          cur.right = cur.right.left;
-        } else if (cur.right.right) {
-          cur.right = cur.right.right;
-        } else {
-          cur.right = null;
+      } else {
+        switch (childCount) {
+          case 0: 
+            if (cur.value < parent.value) {
+              parent.left = null;
+            } else {
+              parent.right = null;
+            }
+            break;
+
+          case 1: 
+            if (cur.value < parent.value) {
+              parent.left = (cur.left === null ? cur.right : cur.left);
+            } else {
+              parent.right = (cur.left === null ? cur.right : cur.left);
+            }
+            break;
+
+          case 2: 
+            replacement = cur.left;
+            replacementParent = cur;
+
+            while (replacement.right !== null) {
+              replacementParent = replacement;
+              replacement = replacement.right;
+            }
+
+            replacementParent.right = replacement.left;
+            replacement.right = cur.right;
+            replacement.left = cur.left;
+
+            if (cur.value < parent.value) {
+              parent.left = replacement;
+            } else {
+              parent.right = replacement;
+            }
         }
-      }
-
-      if (cur.left) {
-        queue.push(cur.left);
-      }
-
-      if (cur.right) {
-        queue.push(cur.right);
       }
     }
   };
